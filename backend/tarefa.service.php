@@ -1,0 +1,43 @@
+<?php
+    class TarefaService {
+        private $conexao;
+        private $tarefa;
+
+        public function __construct
+        (conexao $conexao, Tarefa $tarefa) {
+            $this->conexao = $conexao->conectar();
+            $this->tarefa = $tarefa;
+        }
+        public function inserir(){
+            $query= 'insert into tb_tarefas(tarefa)values
+            (:tarefa)';
+            $stmt = $this->conexao->prepare($query);
+            $stmt->bindValue(':tarefa', $this->tarefa-> 
+            __get('tarefa'));
+            $stmt->execute();
+        }
+
+        public function recuperar(){
+            $query =
+            'select
+             t.id, s.status,t.tarefa 
+             from 
+                tb_tarefas as t
+                LEFT JOIN tb_satus as s on (t.id_status = s.id)
+             '; 
+            $stms = $this->conexao->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO:: FETCH_OBJ);
+        }
+        public function atualizar(){
+
+        }
+
+        public function remover (){
+
+        }
+    }
+
+?>
+
+
